@@ -7,7 +7,6 @@
 </template>
 
 <script lang="ts" setup>
-import mChooseIcon from "../../components/chooseIcon/src/index.vue";
 import { ref } from "vue";
 
 // 是否显示弹窗 true 显示 false 不显示

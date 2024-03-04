@@ -10,6 +10,7 @@
           class="item"
           v-for="(item, index) in Object.keys(ElementPlusIconsVue)"
           :key="index"
+          @click="clickItem(item)"
         >
           <div class="icon">
             <component :is="`el-icon-${toLine(item)}`"></component>
@@ -27,6 +28,7 @@ import { watch, ref } from "vue";
 // 导入所有element plus icon图标
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import { toLine } from "../../../utils";
+import { useCopy } from "../../../hooks/useCopy";
 // console.log("ElementPlusIconsVue", Object.keys(ElementPlusIconsVue));
 
 // 接受父组件传递的数据
@@ -46,6 +48,18 @@ const emits = defineEmits(["update:visible"]);
 // 开启或者关闭弹窗方法
 const handleClick = () => {
   emits("update:visible", !props.visible);
+};
+
+// 点击复制
+const clickItem = (item: string) => {
+  // 转化图标名称
+  const text = `<el-icon-${toLine(item)} />`;
+
+  // 进行拷贝
+  useCopy(text);
+
+  // 关闭弹窗
+  dialogVisible.value = false;
 };
 
 // 监听visible的变化, 只能监听第一次的变化

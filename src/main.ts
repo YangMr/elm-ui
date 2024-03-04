@@ -20,6 +20,9 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(`el-icon-${toLine(key)}`, component)
 }
 
+// 全局注册组件
+import mUI from "./components"
+app.use(mUI)
 
 
 // 注册路由
