@@ -1,14 +1,7 @@
 <template>
   <div>
     <!-- 接受父组件传递进来所有数据, 不包括props中接受的数据 -->
-    <m-menu
-      active-text-color="#ff6600"
-      background-color="red"
-      mode="horizontal"
-      :data="data"
-      defaultActive="2"
-      router
-    ></m-menu>
+    <m-menu :data="data" defaultActive="2" router></m-menu>
   </div>
 </template>
 <script lang="ts" setup>
