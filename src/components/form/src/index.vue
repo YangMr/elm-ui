@@ -1,47 +1,44 @@
 <template>
   <el-form
-    v-bind="$attrs"
     :validate-on-rule-change="false"
     v-if="model"
-    :model="model"
+    v-model="model"
     :rules="rules"
+    v-bind="$attrs"
   >
-    <template v-for="(item, index) in FormOptions">
+    <template v-for="(item, index) in options">
+      <!-- 没有children情况下 -->
       <el-form-item
+        v-if="!item.children || !item.children!.length"
         :label="item.label"
         :prop="item.prop"
-        v-if="!item.children || !item.children.length"
+        :key="index"
       >
         <component
+          v-model="model[item.prop!]"
           v-bind="item.attrs"
-          v-model="model[item.prop]"
           :is="`el-${item.type}`"
         ></component>
       </el-form-item>
 
+      <!-- 有children的情况下 -->
       <el-form-item
+        v-if="item.children && item.children.length"
         :label="item.label"
         :prop="item.prop"
-        v-if="item.children && item.children.length"
+        :key="index"
       >
-        <!-- {{ model }} -->
         <component
-          v-bind="item.attrs"
           v-model="model[item.prop!]"
+          v-bind="item.attrs"
           :is="`el-${item.type}`"
         >
-          <!-- <template> -->
           <component
-            v-for="(child, i) in item.children"
-            :key="i"
             :label="child.label"
             :value="child.value"
-            v-bind="child.attrs"
-            :is="`el-${child.type}`"
-          >
-            <!-- {{ child }} -->
-          </component>
-          <!-- </template> -->
+            v-for="(child, i) in item.children"
+            :key="i"
+          ></component>
         </component>
       </el-form-item>
     </template>
@@ -49,35 +46,36 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
-import cloneDeep from "lodash/cloneDeep";
-
+import { onMounted, ref, type PropType } from "vue";
+import { FormOptions } from "./types/types";
+import type { RuleItem } from "./types/rule";
+// import cloneDeep from "lodash/cloneDeep";
+import _ from "lodash";
 let props = defineProps({
-  FormOptions: {
-    type: Array,
-    default: () => [],
+  options: {
+    type: Array as PropType<FormOptions[]>,
+    required: true,
   },
 });
 
-// 如何获取绑定输入的数据
+// 保存表单的数据
 let model = ref<any>(null);
-let rules = ref<any>(null);
+// 表单的校验规则
+let rules = ref<RuleItem[]>([]);
 
-// dom渲染时触发
 onMounted(() => {
-  if (props.FormOptions && props.FormOptions.length) {
-    let m = {};
-    let r = {};
+  let m: any = {};
+  let r: any = {};
 
-    props.FormOptions.map((item) => {
-      m[item.prop!] = item.value;
-      r[item.prop!] = item.rules;
-    });
-    console.log("r==>", r);
+  props.options.forEach((item) => {
+    m[item.prop!] = item.value;
+    r[item.prop!] = item.rules;
+  });
 
-    model.value = cloneDeep(m);
-    rules.value = cloneDeep(r);
-  }
+  // 深拷贝表单的数据
+  model.value = _.cloneDeep(m);
+  // 深拷贝表单的校验规则
+  rules.value = _.cloneDeep(r);
 });
 </script>
 

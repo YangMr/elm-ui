@@ -1,34 +1,38 @@
-import type { RuleItem } from "./rule";
 
+import type { RuleItem } from "./rule"
 
-interface NewRuleItem extends RuleItem {
-  trigger? : string | string[]
-}
+export interface FormOptions {
+     // 表单项显示的元素
+    type : 'cascader' | 'checkbox' | 'checkbox-group' | 'checkbox-button' | 'color-picker' |
+    'date-picker' | 'input' | 'input-number' | 'radio' | 'radio-group' | 'radio-button' | 'rate' |
+    'select' | 'option' | 'slider' | 'switch' | 'time-picker' | 'time-select' |
+    'transfer' | 'upload' | 'editor' 
 
-export interface FormItem {
-    type:
-      | "autocomplete"
-      | "cascader"
-      | "checkbox"
-      | "checkbox-group"
-      | "input"
-      | "select"
-      | "radio-group"
-      | "slider"
-      | "option"
-      | "radio";
-    label?: string;
-    placeholder?: string;
-    children?: FormItem[];
-    value?: string;
-    prop? : string
-    rules? : NewRuleItem[],
-    disabled? : boolean,
+    // 表单项值
+    value : any
+
+    // 表单项标题
+    label? : string
+
+     // 表单项标识
+     prop? : string
+
+     // 表单项的验证规则
+    rules? : RuleItem[]
+
+    // 表单项的占位符
+    placeholder? : string
+
+    // 表单元素特有的属性
     attrs? : {
-      disabled? : boolean
-      clearable? : boolean
-      showPassword? : boolean
+        // 是否清空
+        clearable?: boolean,
+        // 是否显示密码
+        showPassword?: boolean,
+        // 是否禁用
+        disabled?: boolean,
     }
 
+    // 表单项的子元素
+    children? : FormOptions[]
 }
-  
