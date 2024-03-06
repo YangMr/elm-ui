@@ -5,6 +5,7 @@ import Menu from "./menu"
 import Form from "./form"
 
 
+
 const components = [
     chooseArea,
     chooseIcon,

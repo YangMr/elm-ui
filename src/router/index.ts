@@ -32,7 +32,7 @@ const routes : RouteRecordRaw[] = [
             {
                 path : "/form",
                 component : () => import("../views/form/index.vue")
-            }
+            },
         ]
     }
 ]
