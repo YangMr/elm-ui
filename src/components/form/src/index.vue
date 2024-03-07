@@ -54,6 +54,7 @@
             style="height: 500px; overflow-y: hidden"
             v-model="model[item.prop!]"
             :defaultConfig="{
+              autoLineBreak: false,
               placeholder: item.placeholder,
               editorConfig: item.editorConfig,
             }"
@@ -156,13 +157,17 @@ let initForm = () => {
     props.options.forEach((item) => {
       m[item.prop!] = item.value;
       r[item.prop!] = item.rules;
+      if (item.type === "editor") {
+        m[item.prop!] = "";
+      }
     });
 
     // 将表单的数据进行深拷贝,赋值给model
     model.value = cloneDeep(m);
+    console.log("model", model.value);
     // 将表单的校验规则进行深拷贝, 赋值给rules
     rules.value = cloneDeep(r);
-    model.value.desc = "";
+    // model.value.desc = "";
   }
 
   console.log("rules", rules.value);

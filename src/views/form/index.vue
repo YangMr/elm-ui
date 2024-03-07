@@ -222,7 +222,7 @@ let options = ref<FormOptions[]>([
     type: "editor",
     placeholder: "请输入描述内容",
     label: "内容",
-    value: "",
+    // value: "",
     prop: "desc",
     editorConfig: {},
     toolbarConfig: {},
