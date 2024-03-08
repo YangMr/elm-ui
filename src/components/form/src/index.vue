@@ -11,7 +11,7 @@
       <!-- 没有children -->
       <el-form-item
         v-if="!item.children || !item.children!.length"
-        :prop="item.prop"
+        :prop="item.prop!"
         :label="item.label"
       >
         <component
